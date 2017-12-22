@@ -48,12 +48,13 @@ public class CommandeSource {
 			return new Surface(maxX, maxY);
 
 		} catch (Exception exp) {
-			
+			LOGGER.fatal("Erreur lors de l'initialisation de la surface "
+					+ exp.getMessage());
 			throw exp;
 		}
 	}
 
-	public static List<Commande> createCommande(File fichier) {
+	public static List<Commande> createCommande(File fichier) throws Exception{
 		List<Commande> commandes = new ArrayList<Commande>();
 
 		try {
@@ -76,7 +77,7 @@ public class CommandeSource {
 
 		} catch (Exception exp) {
 			LOGGER.error("Erreurs lors de la lecture des commandes " + exp.getMessage());
-			return new ArrayList<Commande>();
+			throw exp;
 		}
 		return commandes;
 	}
@@ -88,8 +89,8 @@ public class CommandeSource {
 	}
 
 	private static void setOperations(Commande commande, String operations) {
-		String[] arrayOps = operations.split(SEPARATEUR_VIDE);
-		commande.setOperations(Arrays.asList(arrayOps));
+		List<String> ops = Arrays.asList(operations.split(SEPARATEUR_VIDE));
+		commande.setOperations(ops);
 	}
 
 	private static void setPositionEtOrientation(Commande commande,
@@ -99,6 +100,7 @@ public class CommandeSource {
 		Position position = new Position();
 		String positionInitiale = StringUtils.split(positionComplete,
 				SEPARATEUR_BLANC)[0];
+
 		int positionX = getPointCardinal(positionInitiale, PointCardinal.X);
 		int positionY = getPointCardinal(positionInitiale, PointCardinal.Y);
 
@@ -108,8 +110,8 @@ public class CommandeSource {
 		// Recuperation de l orientation
 		String orientation = StringUtils.split(positionComplete,
 				SEPARATEUR_BLANC)[1];
+		
 		position.setOrientation(NotationCardinale.valueOf(orientation));
-
 		commande.setPosition(position);
 	}
 

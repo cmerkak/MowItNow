@@ -24,7 +24,7 @@ public class Tondeuse {
 	@Setter
 	private Surface surface;
 
-	public Position deplacer() {
+	public Position deplacer() throws Exception{
 		Position position = new Position();
 
 		// Recuperation des donnees de la commande a executer
@@ -35,7 +35,7 @@ public class Tondeuse {
 	}
 
 	private void calculerPosition(Position positionInitiale,
-			Position positionFinale, List<String> cmds) {
+			Position positionFinale, List<String> cmds) throws Exception {
 		NotationCardinale directionFinale = positionInitiale.getOrientation();
 		positionFinale.setPosition(positionInitiale.getPosition());
 
@@ -49,7 +49,7 @@ public class Tondeuse {
 	}
 
 	private int[] calculerPosition(Position positionInitiale, Surface surface,
-			Operations operation, NotationCardinale orientation) {
+			Operations operation, NotationCardinale orientation) throws Exception{
 		int posInitX = positionInitiale.getPosition()[0];
 		int posInitY = positionInitiale.getPosition()[1];
 		if (Operations.A.equals(operation)) {
@@ -80,7 +80,7 @@ public class Tondeuse {
 	}
 
 	private NotationCardinale calculerDirection(
-			NotationCardinale directionInitiale, Operations operation) {
+			NotationCardinale directionInitiale, Operations operation) throws Exception {
 		NotationCardinale direction = directionInitiale;
 		switch (operation) {
 		case D:

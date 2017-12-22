@@ -6,6 +6,7 @@ import lombok.Setter;
 
 @AllArgsConstructor
 public enum Encoding {
+	
 	UTF8("UTF-8"), ;
 
 	@Getter
