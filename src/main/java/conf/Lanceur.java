@@ -16,9 +16,9 @@ import bean.Position;
 import bean.Surface;
 
 @Component
-public class Launcher {
+public class Lanceur {
 
-	private static final Logger LOGGER = Logger.getLogger(Launcher.class
+	private static final Logger LOGGER = Logger.getLogger(Lanceur.class
 			.getName());
 	private File fichierDeCommandes;
 
@@ -34,7 +34,12 @@ public class Launcher {
 				.getResource("fichierDeCommandes").getFile());
 
 		// Initialisation de la surface
-		surface = CommandeSource.initSurface(fichierDeCommandes);
+		try {
+			surface = CommandeSource.initSurface(fichierDeCommandes);
+		} catch (Exception exp) {
+			LOGGER.fatal("Erreur lors de l'initialisation de la surface "
+					+ exp.getMessage());
+		}
 
 		// Recuperation des commandes
 		List<Commande> listDeCommande = CommandeSource

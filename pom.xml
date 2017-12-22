@@ -53,7 +53,21 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<encodig>utf8</encodig>
+					<source>1.8</source>
+					<target>1.8</target>
+					<testSource>1.8</testSource>
+					<testTarget>1.8</testTarget>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
+
+
 
 </project>

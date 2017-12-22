@@ -25,33 +25,32 @@ public class CommandeSource {
 
 	private static final String SEPARATEUR_VIDE = "";
 
-	private static String SEPARATEUR_LIGNE = System
+	private static final String SEPARATEUR_LIGNE = System
 			.getProperty("line.separator");
 
-	private static String SEPARATEUR_BLANC = " ";
-
-	public static Surface initSurface(File fichierDeCommande) {
+	private static final String SEPARATEUR_BLANC = " ";
+	
+	public static Surface initSurface(File fichierDeCommande) throws Exception{
 		try {
 
-			List<String> xEtY = (List) Files
+			
+			List<String> xEtY = (List<String>) Files
 					.lines(fichierDeCommande.toPath())
 					.limit(1)
 					.collect(Collectors.toList());
-			//List<String> xEtY = (List<String>) xEtYObject.;
+
 			String[] indices = xEtY.get(0).split(SEPARATEUR_BLANC);
 			int maxX = Integer.parseInt(indices[0]);
 			int maxY = Integer.parseInt(indices[1]);
+			
 			LOGGER.info("initialisation de la surface avec les parametres ("
 					+ maxY + " et " + maxY + ")");
 			return new Surface(maxX, maxY);
 
 		} catch (Exception exp) {
-			LOGGER.fatal("Erreur lors de l'initialisation de la surface "
-					+ exp.getMessage());
-			LOGGER.fatal("Le système va s'arréter");
-			System.exit(0);
+			
+			throw exp;
 		}
-		return null;
 	}
 
 	public static List<Commande> createCommande(File fichier) {
