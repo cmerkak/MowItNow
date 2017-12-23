@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 import bean.Commande;
 import bean.Position;
 import bean.Surface;
-import bean.enumeration.Encoding;
 import bean.enumeration.NotationCardinale;
 import bean.enumeration.PointCardinal;
 
@@ -31,6 +30,8 @@ public class ProducteurCommande {
 			.getProperty("line.separator");
 
 	private static final String SEPARATEUR_BLANC = " ";
+
+	private static final String UTF8 = "UTF-8";
 	
 	public Surface initSurface(File fichierDeCommande) throws Exception{
 		try {
@@ -86,7 +87,7 @@ public class ProducteurCommande {
 
 	private static String[] readFile(File fichier) throws Exception {
 		String contenu = FileUtils.readFileToString(fichier,
-				Encoding.UTF8.getValeur());
+				UTF8);
 		return StringUtils.split(contenu, SEPARATEUR_LIGNE);
 	}
 
