@@ -30,7 +30,7 @@ public class Application {
 
 	private Surface surface;
 
-	@Scheduled(fixedRate = 5000)
+	@Scheduled(fixedDelayString = "${delai.entre.deux.taches.en.milliseconds}")
 	public void executer() {
 
 		// Chargement du fichier contenant les commandes
@@ -69,9 +69,6 @@ public class Application {
 	}
 	
 	public static void main(String[] args) {
-		
-		final Logger LOGGER = Logger.getLogger(Application.class
-				.getName());
 		
 		//Gestion en spring boot
 		SpringApplication.run(Application.class);
