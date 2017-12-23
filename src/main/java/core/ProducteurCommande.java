@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
@@ -72,8 +73,7 @@ public class ProducteurCommande {
 
 				j = i + 1;
 				// Recuperation des operations
-				String operations = contenuFichier[j];
-				commande.setOperations(Arrays.asList(operations));
+				setOperations(commande, contenuFichier[j]);
 				commandes.add(commande);
 			}
 
@@ -85,9 +85,18 @@ public class ProducteurCommande {
 		return commandes;
 	}
 
-	private static String[] readFile(File fichier) throws Exception {
+	private String[] readFile(File fichier) throws Exception {
 		String contenu = FileUtils.readFileToString(fichier, UTF8);
 		return StringUtils.split(contenu, SEPARATEUR_LIGNE);
+	}
+	
+	private void setOperations(Commande commande, String operations)
+	{
+		List<String> ops = Arrays.asList(operations)
+				.stream()
+				.flatMap(Pattern.compile("")::splitAsStream)
+				.collect(Collectors.toList());
+		commande.setOperations(ops);
 	}
 
 	private void setPositionEtOrientation(Commande commande,
