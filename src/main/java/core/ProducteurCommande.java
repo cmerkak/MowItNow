@@ -78,7 +78,7 @@ public class ProducteurCommande {
 			}
 
 		} catch (Exception exp) {
-			LOGGER.error("Erreurs lors de la lecture des commandes " + exp.getMessage());
+			LOGGER.error("Erreur(s) lors de la lecture des commandes " + exp.getMessage());
 			throw exp;
 		}
 		return commandes;

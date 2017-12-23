@@ -44,14 +44,16 @@ public class Application {
 	@Autowired
 	private Tondeuse tondeuse;
 
-	/** La dexieme tache ne se lance que lorsque la premiere se termine */
+	/** La deuxieme tache ne se lance que lorsque la premiere se termine */
 	@Scheduled(fixedDelayString = "${delai.entre.deux.taches.en.milliseconds}")
 	public void executer() {
 
-		// Initialisation de la surface
 		try {
+
 			// Chargement du fichier contenant les commandes
 			fichierDeCommandes = new File(nomEtCheminDuFichierCommande);
+
+			// Initialisation de la surface
 			surface = producteurCommandes.initSurface(fichierDeCommandes);
 
 			// Recuperation des commandes
@@ -60,23 +62,27 @@ public class Application {
 			commandsFile = new LinkedList<Commande>(listDeCommande);
 
 			// Traitement des commandes
-			int i = 0;
-			while (!commandsFile.isEmpty()) {
-				i++;
-				// Recuperation de la commande
-				Commande commande = commandsFile.poll();
+			commandsFile
+					.stream()
+					.forEach(commande -> {
 
-				// Traitement de la commande
-				// Position position = new Tondeuse(commande,
-				// surface).deplacer();
-				Position position = tondeuse.deplacer(commande, surface);
+						// Traitement de la commande
+							Position position;
+							try {
+								position = tondeuse.deplacer(commande, surface);
 
-				// Affichage de la position de la tondeuse
-				LOGGER.info("Tondeuse n° " + i + ": Position : ("
-						+ position.getPosition()[0] + ","
-						+ position.getPosition()[1] + " Orientation :"
-						+ position.getOrientation() + ")");
-			}
+								// Affichage de la position de la tondeuse
+								LOGGER.info("Tondeuse: " + "Position : ("
+										+ position.getPosition()[0] + ","
+										+ position.getPosition()[1]
+										+ " Orientation :"
+										+ position.getOrientation() + ")");
+							} catch (Exception exp) {
+								LOGGER.error("Erreur(s) lors de traitement des commandes "
+										+ exp.getMessage());
+							}
+
+						});
 		} catch (Exception exp) {
 			LOGGER.error("Erreur(s) lors de traitement des commandes "
 					+ exp.getMessage());
@@ -85,7 +91,7 @@ public class Application {
 
 	public static void main(String[] args) {
 
-		// Gestion en spring boot
+		// Gestion de l 'appli en spring boot
 		SpringApplication.run(Application.class);
 	}
 }
