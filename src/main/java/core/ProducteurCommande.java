@@ -23,8 +23,6 @@ public class ProducteurCommande {
 	private static final Logger LOGGER = Logger
 			.getLogger(ProducteurCommande.class.getName());
 
-	private static final String SEPARATEUR_VIDE = "";
-
 	private static final String SEPARATEUR_LIGNE = System
 			.getProperty("line.separator");
 
@@ -75,7 +73,7 @@ public class ProducteurCommande {
 				j = i + 1;
 				// Recuperation des operations
 				String operations = contenuFichier[j];
-				setOperations(commande, operations);
+				commande.setOperations(Arrays.asList(operations));
 				commandes.add(commande);
 			}
 
@@ -90,11 +88,6 @@ public class ProducteurCommande {
 	private static String[] readFile(File fichier) throws Exception {
 		String contenu = FileUtils.readFileToString(fichier, UTF8);
 		return StringUtils.split(contenu, SEPARATEUR_LIGNE);
-	}
-
-	private static void setOperations(Commande commande, String operations) {
-		List<String> ops = Arrays.asList(operations.split(SEPARATEUR_VIDE));
-		commande.setOperations(ops);
 	}
 
 	private void setPositionEtOrientation(Commande commande,
