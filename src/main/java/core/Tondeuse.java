@@ -2,6 +2,8 @@ package core;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,7 @@ import bean.enumeration.Operations;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Component
 public class Tondeuse {
 
 	@Getter

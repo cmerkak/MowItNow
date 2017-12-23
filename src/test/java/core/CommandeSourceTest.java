@@ -15,6 +15,8 @@ import bean.enumeration.NotationCardinale;
 public class CommandeSourceTest {
 
 	private File fichier;
+	
+	private CommandeSource producteurCommandes = new CommandeSource();
 
 	@Before
 	public void beforeTest() {
@@ -26,7 +28,7 @@ public class CommandeSourceTest {
 	public void testCreateCommande() {
 		List<Commande> commandes;
 		try {
-			commandes = CommandeSource.createCommande(fichier);
+			commandes = producteurCommandes.createCommande(fichier);
 			Assert.assertEquals(2, commandes.size());
 
 			// 1 ere commande
@@ -57,7 +59,7 @@ public class CommandeSourceTest {
 	public void testInitSurface() {
 		Surface surface;
 		try {
-			surface = CommandeSource.initSurface(fichier);
+			surface = producteurCommandes.initSurface(fichier);
 			Assert.assertEquals(5, surface.getMaxX());
 			Assert.assertEquals(5, surface.getMaxY());
 		} catch (Exception e) {

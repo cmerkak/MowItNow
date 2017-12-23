@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>MowItNow</groupId>
-	<artifactId>MowItNow</artifactId>
+	<artifactId>mow.it.now</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 
@@ -21,7 +21,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
 

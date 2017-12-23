@@ -5,7 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import lombok.Setter;
+
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -17,7 +21,7 @@ import bean.Surface;
 import core.CommandeSource;
 import core.Tondeuse;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages="core")
 @EnableScheduling
 public class Application {
 	
@@ -25,24 +29,30 @@ public class Application {
 			.getName());
 	
 	private File fichierDeCommandes;
+	
+	@Setter
+	@Value("${nom.et.chemin.fichier.commande}")
+	private String nomEtCheminDuFichierCommande;
 
 	private static Queue<Commande> commandsFile = new LinkedList<Commande>();
 
 	private Surface surface;
+	
+	@Autowired
+	private CommandeSource producteurCommandes;
 
+	/** La dexieme tache ne se lance que lorsque la premiere se termine */
 	@Scheduled(fixedDelayString = "${delai.entre.deux.taches.en.milliseconds}")
 	public void executer() {
 
-		// Chargement du fichier contenant les commandes
-		fichierDeCommandes = new File(this.getClass().getClassLoader()
-				.getResource("fichierDeCommandes").getFile());
-
 		// Initialisation de la surface
 		try {
-			surface = CommandeSource.initSurface(fichierDeCommandes);
+			// Chargement du fichier contenant les commandes
+			fichierDeCommandes = new File(nomEtCheminDuFichierCommande);
+			surface = producteurCommandes.initSurface(fichierDeCommandes);
 
 			// Recuperation des commandes
-			List<Commande> listDeCommande = CommandeSource
+			List<Commande> listDeCommande = producteurCommandes
 					.createCommande(fichierDeCommandes);
 			commandsFile = new LinkedList<Commande>(listDeCommande);
 
@@ -63,7 +73,7 @@ public class Application {
 						+ position.getOrientation() + ")");
 			}
 		} catch (Exception exp) {
-			LOGGER.error("Erreur lors de traitement des commandes "
+			LOGGER.error("Erreur(s) lors de traitement des commandes "
 					+ exp.getMessage());
 		}
 	}

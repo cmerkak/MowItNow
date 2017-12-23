@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import bean.Commande;
 import bean.Position;
@@ -18,6 +19,7 @@ import bean.enumeration.Encoding;
 import bean.enumeration.NotationCardinale;
 import bean.enumeration.PointCardinal;
 
+@Component
 public class CommandeSource {
 
 	private static final Logger LOGGER = Logger.getLogger(CommandeSource.class
@@ -30,7 +32,7 @@ public class CommandeSource {
 
 	private static final String SEPARATEUR_BLANC = " ";
 	
-	public static Surface initSurface(File fichierDeCommande) throws Exception{
+	public Surface initSurface(File fichierDeCommande) throws Exception{
 		try {
 
 			
@@ -48,13 +50,13 @@ public class CommandeSource {
 			return new Surface(maxX, maxY);
 
 		} catch (Exception exp) {
-			LOGGER.fatal("Erreur lors de l'initialisation de la surface "
+			LOGGER.fatal("Erreur(s) lors de l'initialisation de la surface "
 					+ exp.getMessage());
 			throw exp;
 		}
 	}
 
-	public static List<Commande> createCommande(File fichier) throws Exception{
+	public List<Commande> createCommande(File fichier) throws Exception{
 		List<Commande> commandes = new ArrayList<Commande>();
 
 		try {
