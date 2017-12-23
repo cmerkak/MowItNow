@@ -56,7 +56,7 @@ public class Application {
 
 			// Recuperation des commandes
 			List<Commande> listDeCommande = producteurCommandes
-					.createCommande(fichierDeCommandes);
+					.creerCommande(fichierDeCommandes);
 			commandsFile = new LinkedList<Commande>(listDeCommande);
 
 			// Traitement des commandes

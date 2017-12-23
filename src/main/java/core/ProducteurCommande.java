@@ -56,7 +56,7 @@ public class ProducteurCommande {
 		}
 	}
 
-	public List<Commande> createCommande(File fichier) throws Exception{
+	public List<Commande> creerCommande(File fichier) throws Exception{
 		List<Commande> commandes = new ArrayList<Commande>();
 
 		try {

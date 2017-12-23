@@ -15,7 +15,7 @@ import bean.enumeration.NotationCardinale;
 public class ProducteurCommandeTest {
 
 	private File fichier;
-	
+
 	private ProducteurCommande producteurCommandes = new ProducteurCommande();
 
 	@Before
@@ -25,32 +25,36 @@ public class ProducteurCommandeTest {
 	}
 
 	@Test
-	public void testCreateCommande() {
+	public void testCreationCommande() {
 		List<Commande> commandes;
 		try {
-			commandes = producteurCommandes.createCommande(fichier);
+			commandes = producteurCommandes.creerCommande(fichier);
 			Assert.assertEquals(2, commandes.size());
 
 			// 1 ere commande
-			Assert.assertEquals(1, commandes.get(0).getPosition().getPosition()[0]);
-			Assert.assertEquals(2, commandes.get(0).getPosition().getPosition()[1]);
-			Assert.assertEquals(NotationCardinale.N, commandes.get(0).getPosition()
-					.getOrientation());
+			Assert.assertEquals(1,
+					commandes.get(0).getPosition().getPosition()[0]);
+			Assert.assertEquals(2,
+					commandes.get(0).getPosition().getPosition()[1]);
+			Assert.assertEquals(NotationCardinale.N, commandes.get(0)
+					.getPosition().getOrientation());
 
 			String operations = commandes.get(0).getOperations().stream()
 					.map(i -> i.toString()).collect(Collectors.joining(""));
 			Assert.assertEquals("GAGAGAGAA", operations);
 
 			// 2eme commande
-			Assert.assertEquals(3, commandes.get(1).getPosition().getPosition()[0]);
-			Assert.assertEquals(3, commandes.get(1).getPosition().getPosition()[1]);
-			Assert.assertEquals(NotationCardinale.E, commandes.get(1).getPosition()
-					.getOrientation());
+			Assert.assertEquals(3,
+					commandes.get(1).getPosition().getPosition()[0]);
+			Assert.assertEquals(3,
+					commandes.get(1).getPosition().getPosition()[1]);
+			Assert.assertEquals(NotationCardinale.E, commandes.get(1)
+					.getPosition().getOrientation());
 			operations = commandes.get(1).getOperations().stream()
 					.map(i -> i.toString()).collect(Collectors.joining(""));
 			Assert.assertEquals("AADAADADDA", operations);
-		} catch (Exception e) {
-			Assert.fail();
+		} catch (Exception exp) {
+			Assert.fail(exp.getMessage());
 		}
 
 	}
@@ -65,6 +69,5 @@ public class ProducteurCommandeTest {
 		} catch (Exception e) {
 			Assert.fail();
 		}
-		
 	}
 }

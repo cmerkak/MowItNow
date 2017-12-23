@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.Arrays;
 import java.util.List;
 
-
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,22 +50,22 @@ public class TondeuseTest {
 
 	@Test
 	public void testDeplacementTondeuses() {
-		
-		try{
-		// Tondeuse 1
-		positionTondeuse1 = tondeuse1.deplacer(commande1, surface);
-		assertEquals(NotationCardinale.N, positionTondeuse1.getOrientation());
-		assertEquals(1, positionTondeuse1.getPosition()[0]);
-		assertEquals(3, positionTondeuse1.getPosition()[1]);
 
-		// Tondeuse 2
-		positionTondeuse2 = tondeuse2.deplacer(commande2, surface);
-		assertEquals(NotationCardinale.E, positionTondeuse2.getOrientation());
-		assertEquals(5, positionTondeuse2.getPosition()[0]);
-		assertEquals(1, positionTondeuse2.getPosition()[1]);
-		}
-		catch(Exception exp)
-		{
+		try {
+			// Tondeuse 1
+			positionTondeuse1 = tondeuse1.deplacer(commande1, surface);
+			assertEquals(NotationCardinale.N,
+					positionTondeuse1.getOrientation());
+			assertEquals(1, positionTondeuse1.getPosition()[0]);
+			assertEquals(3, positionTondeuse1.getPosition()[1]);
+
+			// Tondeuse 2
+			positionTondeuse2 = tondeuse2.deplacer(commande2, surface);
+			assertEquals(NotationCardinale.E,
+					positionTondeuse2.getOrientation());
+			assertEquals(5, positionTondeuse2.getPosition()[0]);
+			assertEquals(1, positionTondeuse2.getPosition()[1]);
+		} catch (Exception exp) {
 			Assert.fail(exp.getMessage());
 		}
 	}
