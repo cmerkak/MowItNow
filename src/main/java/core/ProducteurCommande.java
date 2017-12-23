@@ -16,13 +16,12 @@ import bean.Commande;
 import bean.Position;
 import bean.Surface;
 import bean.enumeration.NotationCardinale;
-import bean.enumeration.PointCardinal;
 
 @Component
 public class ProducteurCommande {
 
-	private static final Logger LOGGER = Logger.getLogger(ProducteurCommande.class
-			.getName());
+	private static final Logger LOGGER = Logger
+			.getLogger(ProducteurCommande.class.getName());
 
 	private static final String SEPARATEUR_VIDE = "";
 
@@ -32,20 +31,22 @@ public class ProducteurCommande {
 	private static final String SEPARATEUR_BLANC = " ";
 
 	private static final String UTF8 = "UTF-8";
-	
-	public Surface initSurface(File fichierDeCommande) throws Exception{
+
+	private static final int POSITION_1 = 1;
+
+	private static final int POSITION_2 = 2;
+
+	public Surface initSurface(File fichierDeCommande) throws Exception {
 		try {
 
-			
 			List<String> xEtY = (List<String>) Files
-					.lines(fichierDeCommande.toPath())
-					.limit(1)
+					.lines(fichierDeCommande.toPath()).limit(1)
 					.collect(Collectors.toList());
 
 			String[] indices = xEtY.get(0).split(SEPARATEUR_BLANC);
 			int maxX = Integer.parseInt(indices[0]);
 			int maxY = Integer.parseInt(indices[1]);
-			
+
 			LOGGER.info("initialisation de la surface avec les parametres ("
 					+ maxY + " et " + maxY + ")");
 			return new Surface(maxX, maxY);
@@ -57,7 +58,7 @@ public class ProducteurCommande {
 		}
 	}
 
-	public List<Commande> creerCommande(File fichier) throws Exception{
+	public List<Commande> creerCommande(File fichier) throws Exception {
 		List<Commande> commandes = new ArrayList<Commande>();
 
 		try {
@@ -79,15 +80,15 @@ public class ProducteurCommande {
 			}
 
 		} catch (Exception exp) {
-			LOGGER.error("Erreur(s) lors de la lecture des commandes " + exp.getMessage());
+			LOGGER.error("Erreur(s) lors de la lecture des commandes "
+					+ exp.getMessage());
 			throw exp;
 		}
 		return commandes;
 	}
 
 	private static String[] readFile(File fichier) throws Exception {
-		String contenu = FileUtils.readFileToString(fichier,
-				UTF8);
+		String contenu = FileUtils.readFileToString(fichier, UTF8);
 		return StringUtils.split(contenu, SEPARATEUR_LIGNE);
 	}
 
@@ -96,16 +97,16 @@ public class ProducteurCommande {
 		commande.setOperations(ops);
 	}
 
-	private static void setPositionEtOrientation(Commande commande,
-			String positionComplete) {
+	private void setPositionEtOrientation(Commande commande,
+			String positionComplete) throws Exception {
 
 		// Recuperation de la position
 		Position position = new Position();
 		String positionInitiale = StringUtils.split(positionComplete,
 				SEPARATEUR_BLANC)[0];
 
-		int positionX = getPointCardinal(positionInitiale, PointCardinal.X);
-		int positionY = getPointCardinal(positionInitiale, PointCardinal.Y);
+		int positionX = getX(positionInitiale);
+		int positionY = getY(positionInitiale);
 
 		int[] pos = { positionX, positionY };
 		position.setPosition(pos);
@@ -113,25 +114,20 @@ public class ProducteurCommande {
 		// Recuperation de l orientation
 		String orientation = StringUtils.split(positionComplete,
 				SEPARATEUR_BLANC)[1];
-		
+
 		position.setOrientation(NotationCardinale.valueOf(orientation));
 		commande.setPosition(position);
 	}
 
-	private static int getPointCardinal(String position, PointCardinal type) {
-		int point = 0;
-		switch (type) {
-		case X:
-			String posX = StringUtils.substring(position, 0, 1);
-			point = Integer.parseInt(posX);
-			break;
-		case Y:
-			String posY = StringUtils.substring(position, 1, 2);
-			point = Integer.parseInt(posY);
-			break;
-		default:
-			return 0;
-		}
-		return point;
+	private int getX(String position) throws Exception {
+
+		String posX = StringUtils.substring(position, 0, POSITION_1);
+		return Integer.parseInt(posX);
+	}
+
+	private int getY(String position) throws Exception {
+
+		String posY = StringUtils.substring(position, POSITION_1, POSITION_2);
+		return Integer.parseInt(posY);
 	}
 }
