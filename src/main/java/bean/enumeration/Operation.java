@@ -1,6 +1,6 @@
 package bean.enumeration;
 
-public enum Operations {
+public enum Operation {
 
 	/** Avancer */
 	A,

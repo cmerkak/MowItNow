@@ -8,7 +8,7 @@ import bean.Commande;
 import bean.Position;
 import bean.Surface;
 import bean.enumeration.NotationCardinale;
-import bean.enumeration.Operations;
+import bean.enumeration.Operation;
 
 @Component
 public class Tondeuse {
@@ -31,7 +31,7 @@ public class Tondeuse {
 		positionFinale.setPosition(positionInitiale.getPosition());
 
 		for (String cmd : cmds) {
-			Operations operation = Operations.valueOf(cmd);
+			Operation operation = Operation.valueOf(cmd);
 			directionFinale = calculerDirection(directionFinale, operation);
 			positionFinale.setOrientation(directionFinale);
 			positionFinale.setPosition(calculerPosition(positionFinale,
@@ -40,11 +40,11 @@ public class Tondeuse {
 	}
 
 	private int[] calculerPosition(Position positionInitiale, Surface surface,
-			Operations operation, NotationCardinale orientation)
+			Operation operation, NotationCardinale orientation)
 			throws Exception {
 		int posInitX = positionInitiale.getPosition()[0];
 		int posInitY = positionInitiale.getPosition()[1];
-		if (Operations.A.equals(operation)) {
+		if (Operation.A.equals(operation)) {
 
 			switch (orientation) {
 			case N:
@@ -72,7 +72,7 @@ public class Tondeuse {
 	}
 
 	private NotationCardinale calculerDirection(
-			NotationCardinale directionInitiale, Operations operation)
+			NotationCardinale directionInitiale, Operation operation)
 			throws Exception {
 		NotationCardinale direction = directionInitiale;
 		switch (operation) {
