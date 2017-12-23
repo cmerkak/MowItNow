@@ -20,9 +20,9 @@ import bean.enumeration.NotationCardinale;
 import bean.enumeration.PointCardinal;
 
 @Component
-public class CommandeSource {
+public class ProducteurCommande {
 
-	private static final Logger LOGGER = Logger.getLogger(CommandeSource.class
+	private static final Logger LOGGER = Logger.getLogger(ProducteurCommande.class
 			.getName());
 
 	private static final String SEPARATEUR_VIDE = "";

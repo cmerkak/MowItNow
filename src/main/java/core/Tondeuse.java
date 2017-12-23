@@ -4,41 +4,27 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import bean.Commande;
 import bean.Position;
 import bean.Surface;
 import bean.enumeration.NotationCardinale;
 import bean.enumeration.Operations;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Component
 public class Tondeuse {
 
-	@Getter
-	@Setter
-	private Commande commande;
-
-	@Getter
-	@Setter
-	private Surface surface;
-
-	public Position deplacer() throws Exception{
+	public Position deplacer(Commande commande, Surface surface) throws Exception{
 		Position position = new Position();
 
 		// Recuperation des donnees de la commande a executer
 		calculerPosition(commande.getPosition(), position,
-				commande.getOperations());
+				commande.getOperations(), surface);
 
 		return position;
 	}
 
 	private void calculerPosition(Position positionInitiale,
-			Position positionFinale, List<String> cmds) throws Exception {
+			Position positionFinale, List<String> cmds, Surface surface) throws Exception {
 		NotationCardinale directionFinale = positionInitiale.getOrientation();
 		positionFinale.setPosition(positionInitiale.getPosition());
 

@@ -18,18 +18,18 @@ import org.springframework.scheduling.annotation.Scheduled;
 import bean.Commande;
 import bean.Position;
 import bean.Surface;
-import core.CommandeSource;
+import core.ProducteurCommande;
 import core.Tondeuse;
 
-@SpringBootApplication(scanBasePackages="core")
+@SpringBootApplication(scanBasePackages = "core")
 @EnableScheduling
 public class Application {
-	
+
 	private static final Logger LOGGER = Logger.getLogger(Application.class
 			.getName());
-	
+
 	private File fichierDeCommandes;
-	
+
 	@Setter
 	@Value("${nom.et.chemin.fichier.commande}")
 	private String nomEtCheminDuFichierCommande;
@@ -37,9 +37,12 @@ public class Application {
 	private static Queue<Commande> commandsFile = new LinkedList<Commande>();
 
 	private Surface surface;
-	
+
 	@Autowired
-	private CommandeSource producteurCommandes;
+	private ProducteurCommande producteurCommandes;
+
+	@Autowired
+	private Tondeuse tondeuse;
 
 	/** La dexieme tache ne se lance que lorsque la premiere se termine */
 	@Scheduled(fixedDelayString = "${delai.entre.deux.taches.en.milliseconds}")
@@ -64,7 +67,9 @@ public class Application {
 				Commande commande = commandsFile.poll();
 
 				// Traitement de la commande
-				Position position = new Tondeuse(commande, surface).deplacer();
+				// Position position = new Tondeuse(commande,
+				// surface).deplacer();
+				Position position = tondeuse.deplacer(commande, surface);
 
 				// Affichage de la position de la tondeuse
 				LOGGER.info("Tondeuse n° " + i + ": Position : ("
@@ -77,10 +82,10 @@ public class Application {
 					+ exp.getMessage());
 		}
 	}
-	
+
 	public static void main(String[] args) {
-		
-		//Gestion en spring boot
+
+		// Gestion en spring boot
 		SpringApplication.run(Application.class);
 	}
 }

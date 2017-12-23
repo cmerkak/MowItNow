@@ -12,11 +12,11 @@ import bean.Commande;
 import bean.Surface;
 import bean.enumeration.NotationCardinale;
 
-public class CommandeSourceTest {
+public class ProducteurCommandeTest {
 
 	private File fichier;
 	
-	private CommandeSource producteurCommandes = new CommandeSource();
+	private ProducteurCommande producteurCommandes = new ProducteurCommande();
 
 	@Before
 	public void beforeTest() {

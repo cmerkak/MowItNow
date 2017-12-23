@@ -24,7 +24,7 @@ public class TondeuseTest {
 
 	private Surface surface = new Surface(5, 5);
 
-	private Tondeuse tondeuse1;
+	private Tondeuse tondeuse1 = new Tondeuse();
 
 	private Position positionTondeuse1;
 
@@ -34,7 +34,7 @@ public class TondeuseTest {
 	private List<String> operationsCmd1 = Arrays.asList("G", "A", "G", "A",
 			"G", "A", "G", "A", "A");
 
-	private Tondeuse tondeuse2;
+	private Tondeuse tondeuse2 = new Tondeuse();
 
 	private Position positionTondeuse2;
 
@@ -47,28 +47,28 @@ public class TondeuseTest {
 	@Before
 	public void init() {
 		commande1 = new Commande(positionInitialeCmd1, operationsCmd1);
-		tondeuse1 = new Tondeuse(commande1, surface);
-		try {
-			positionTondeuse1 = tondeuse1.deplacer();
-
-			commande2 = new Commande(positionInitialeCmd2, operationsCmd2);
-			tondeuse2 = new Tondeuse(commande2, surface);
-			positionTondeuse2 = tondeuse2.deplacer();
-		} catch (Exception e) {
-			Assert.fail();
-		}
+		commande2 = new Commande(positionInitialeCmd2, operationsCmd2);
 	}
 
 	@Test
 	public void testDeplacementTondeuses() {
+		
+		try{
 		// Tondeuse 1
+		positionTondeuse1 = tondeuse1.deplacer(commande1, surface);
 		assertEquals(NotationCardinale.N, positionTondeuse1.getOrientation());
 		assertEquals(1, positionTondeuse1.getPosition()[0]);
 		assertEquals(3, positionTondeuse1.getPosition()[1]);
 
 		// Tondeuse 2
+		positionTondeuse2 = tondeuse2.deplacer(commande2, surface);
 		assertEquals(NotationCardinale.E, positionTondeuse2.getOrientation());
 		assertEquals(5, positionTondeuse2.getPosition()[0]);
 		assertEquals(1, positionTondeuse2.getPosition()[1]);
+		}
+		catch(Exception exp)
+		{
+			Assert.fail(exp.getMessage());
+		}
 	}
 }

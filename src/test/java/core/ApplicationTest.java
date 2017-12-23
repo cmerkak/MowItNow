@@ -16,15 +16,15 @@ public class ApplicationTest {
 
 	@Before
 	public void init() {
-		cheminEtNomDuFichier = this.getClass().getClassLoader().getResource(nomFichier)
-				.getPath();
+		cheminEtNomDuFichier = this.getClass().getClassLoader()
+				.getResource(nomFichier).getPath();
+
 		app.setNomEtCheminDuFichierCommande(cheminEtNomDuFichier);
 	}
 
 	@Test
 	public void testApplication() {
 		try {
-
 			app.executer();
 		} catch (Exception exp) {
 			Assert.fail(exp.getMessage());
