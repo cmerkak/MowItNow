@@ -89,11 +89,9 @@ public class ProducteurCommande {
 		String contenu = FileUtils.readFileToString(fichier, UTF8);
 		return StringUtils.split(contenu, SEPARATEUR_LIGNE);
 	}
-	
-	private void setOperations(Commande commande, String operations)
-	{
-		List<String> ops = Arrays.asList(operations)
-				.stream()
+
+	private void setOperations(Commande commande, String operations) {
+		List<String> ops = Arrays.asList(operations).stream()
 				.flatMap(Pattern.compile("")::splitAsStream)
 				.collect(Collectors.toList());
 		commande.setOperations(ops);
@@ -104,32 +102,19 @@ public class ProducteurCommande {
 
 		// Recuperation de la position
 		Position position = new Position();
-		String positionInitiale = StringUtils.split(positionComplete,
-				SEPARATEUR_BLANC)[0];
+		String[] positionInitiale = StringUtils.split(positionComplete,
+				SEPARATEUR_BLANC);
 
-		int positionX = getX(positionInitiale);
-		int positionY = getY(positionInitiale);
+		int positionX = Integer.parseInt(positionInitiale[0]);
+		int positionY = Integer.parseInt(positionInitiale[POSITION_1]);
 
 		int[] pos = { positionX, positionY };
 		position.setPosition(pos);
 
 		// Recuperation de l orientation
-		String orientation = StringUtils.split(positionComplete,
-				SEPARATEUR_BLANC)[1];
-
+		String orientation = positionInitiale[POSITION_2];
 		position.setOrientation(NotationCardinale.valueOf(orientation));
 		commande.setPosition(position);
 	}
 
-	private int getX(String position) throws Exception {
-
-		String posX = StringUtils.substring(position, 0, POSITION_1);
-		return Integer.parseInt(posX);
-	}
-
-	private int getY(String position) throws Exception {
-
-		String posY = StringUtils.substring(position, POSITION_1, POSITION_2);
-		return Integer.parseInt(posY);
-	}
 }
